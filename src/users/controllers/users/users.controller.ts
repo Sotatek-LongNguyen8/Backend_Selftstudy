@@ -32,22 +32,23 @@ export class UsersController {
     return this.userService.getUsers();
   }
 
-  @Get('/username/:username')
+  @Get('username/:username')
   @UseInterceptors(ClassSerializerInterceptor)
-  getByUsername(@Param('username') username: string) {
-    const user = this.userService.getUserByUsername(username);
-    if (user) return new SerializedUser(user);
-    else throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
+  async getByUsername(@Param('username') username: string) {
+    const users = this.userService.getUserByUsername(username);
+    if (users) {
+      return users;
+    } else throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
   }
 
   @Get('id/:id')
   @UseInterceptors(ClassSerializerInterceptor)
   @UseFilters(HttpExceptionFilter)
-  getById(@Param('id', ParseIntPipe) id: number) {
-    const user = this.userService.getUserById(id);
-    if (user) return new SerializedUser(user);
+  async getById(@Param('id', ParseIntPipe) id: number) {
+    const users = this.userService.getUserById(id);
+    if (users) return users;
     else {
-      throw new UserNotFoundException();
+      throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
     }
   }
 
