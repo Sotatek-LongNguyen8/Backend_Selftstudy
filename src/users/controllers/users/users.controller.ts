@@ -10,6 +10,7 @@ import {
   ParseIntPipe,
   Post,
   UseFilters,
+  UseGuards,
   UseInterceptors,
   UsePipes,
   ValidationPipe,
@@ -22,9 +23,7 @@ import { SerializedUser } from 'src/users/types';
 
 @Controller('users')
 export class UsersController {
-  constructor(
-    @Inject('USER_SERVICE') private readonly userService: UsersService,
-  ) {}
+  constructor(private readonly userService: UsersService) {}
 
   @Get('')
   @UseInterceptors(ClassSerializerInterceptor)

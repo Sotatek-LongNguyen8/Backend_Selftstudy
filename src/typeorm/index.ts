@@ -1,4 +1,5 @@
 import { User } from './User';
-const entities = { User };
-export { User };
+import { SessionEntity } from './Session';
+const entities = { User, SessionEntity };
+export { User, SessionEntity };
 export default entities;
